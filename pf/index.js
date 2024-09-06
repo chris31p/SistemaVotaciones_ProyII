@@ -53,6 +53,5 @@ let continuarVotando = true;
 while (continuarVotando) {
   const opcionVoto = prompt("Ingrese la opción en la que desea votar:");
   votarEnEncuesta(encuesta, opcionVoto);
-  mostrarResultadosEncuesta(encuesta);
   continuarVotando = confirm("¿Desea seguir votando?");
 }
