@@ -1,59 +1,79 @@
 alert("Solución - Programación Funcional");
 
-// Función para crear una nueva encuesta
-const crearEncuesta = (titulo, opciones) => {
-  return {
-    titulo,
-    opciones: opciones.map((opcion) => ({
-      texto: opcion,
-      votos: 0,
-    })),
-  };
-};
+// Función para crear una pregunta
+const crearPregunta = (pregunta, opciones, respCorrecta) => ({
+  pregunta,
+  opciones,
+  respCorrecta
+});
 
-// Función para votar en una opción
-const votarEnEncuesta = (encuesta, opcionTexto) => {
-  const opcionEncontrada = encuesta.opciones.some(
-    (opcion) => opcion.texto.toLowerCase() === opcionTexto.toLowerCase()
-  );
-  if (opcionEncontrada) {
-    encuesta.opciones = encuesta.opciones.map((opcion) =>
-      opcion.texto.toLowerCase() === opcionTexto.toLowerCase()
-        ? { ...opcion, votos: opcion.votos + 1 }
-        : opcion
-    );
-    mostrarResultadosEncuesta(encuesta);
-  } else {
-    alert("Opción no encontrada, por favor ingrese una opción válida.");
-  }
-};
+// Creamos otra funcion que compara la respuesta del usuario con la respuesta correcta
+const esRespuestaCorrecta = (respUsuario, respCorrecta) => respUsuario === respCorrecta;
 
-// Función para mostrar los resultados de una encuesta en alerta y consola
-const mostrarResultadosEncuesta = (encuesta) => {
-  let resultados = `Resultados para la encuesta: ${encuesta.titulo}\n`;
-  encuesta.opciones.forEach((op) => {
-    resultados += `${op.texto}: ${op.votos} votos\n`;
+//Luego creamos una funcion para realizar el cuestionario
+const realizarCuestionario = (preguntas) => {
+  let correctas = 0;
+  let incorrectas = 0;
+  let resultados = [];
+
+  preguntas.forEach((pregunta, index) => {
+      let mensaje = `${pregunta.pregunta}\n`;
+      pregunta.opciones.forEach((opcion, idx) => {
+          mensaje += `${idx + 1}. ${opcion}\n`;
+      });
+
+      //Creamos una variable donde obtenemos la respuesta del usuario
+      const respUsuarioIndex = parseInt(prompt(mensaje, '')) - 1;
+      const respuestaUsuario = pregunta.opciones[respUsuarioIndex];
+
+      if (esRespuestaCorrecta(respuestaUsuario, pregunta.respCorrecta)) {
+          alert('¡Correcto!');
+          correctas++;
+          resultados.push({
+              numeroPregunta: index + 1,
+              pregunta: pregunta.pregunta,
+              esCorrecta: true,
+              respUsuario: respuestaUsuario,
+              respCorrecta: pregunta.respCorrecta
+          });
+      } else {
+          alert(`Incorrecto. La respuesta correcta es: ${pregunta.respCorrecta}`);
+          incorrectas++;
+          resultados.push({
+              numeroPregunta: index + 1,
+              pregunta: pregunta.pregunta,
+              esCorrecta: false,
+              respUsuario: respuestaUsuario,
+              respCorrecta: pregunta.respCorrecta
+          });
+      }
   });
-  alert(resultados);        // Mostrar en alerta
-  console.log(resultados);  // Mostrar en consola
+
+  mostrarResultados(resultados, correctas, incorrectas);
 };
 
-// Interacción con el usuario
-const tituloEncuesta = prompt("Ingrese el título de la encuesta:");
-const opciones = [];
-let agregarMasOpciones = true;
+//Necesitamos una función para mostrar los resultados del cuestionario
+const mostrarResultados = (resultados, correctas, incorrectas) => {
+  let mensajeResultados = "Resultados del cuestionario:\n\n";
+  resultados.forEach((resultado) => {
+      mensajeResultados += `Pregunta ${resultado.numeroPregunta}: ${resultado.pregunta}\n`;
+      mensajeResultados += `Tu respuesta: ${resultado.respUsuario} - ${resultado.esCorrecta ? 'Correcta' : `Incorrecta, la respuesta correcta es: ${resultado.respCorrecta}`}\n\n`;
+  });
+  mensajeResultados += `Total Correctas: ${correctas}\nTotal Incorrectas: ${incorrectas}`;
+  alert(mensajeResultados);
+  console.log(mensajeResultados);
+};
 
-// Agregar exactamente 8 preguntas
-for (let i = 0; i < 8; i++) {
-  const opcionTexto = prompt(`Ingrese la opción de respuesta ${i + 1}:`);
-  opciones.push(opcionTexto);
-}
+//Creamos un array para listar las preguntas
+const preguntas = [
+  crearPregunta('¿Cuál es la capital de Chile?', ["Valparaíso", "Santiago", "Concepción", "La Serena"], 'Santiago'),
+  crearPregunta('Si alguien te dice “estoy pato”, ¿qué quiere decir?', ["Que está feliz", "Que está cansado", "Que no tiene dinero", "Que está enfermo"], 'Que no tiene dinero'),
+  crearPregunta('¿Qué significa “al tiro”?', ["Más tarde", "Ahora mismo", "Nunca", "Mañana"], 'Ahora mismo'),
+  crearPregunta('¿Qué significa “andar con la caña”?', ["Estar enamorado", "Estar resfriado", "Tener resaca", "Estar cansado"], 'Tener resaca'),
+  crearPregunta('¿Qué famoso festival de música se celebra anualmente en Viña del Mar?', ["Lollapalooza", "Festival de Viña", "Rock in Rio", "Coachella"], 'Festival de Viña'),
+  crearPregunta('¿Qué animal es el símbolo nacional de Chile?', ["Cóndor", "Puma", "Llama", "Guanaco"], 'Cóndor'),
+];
 
-const encuesta = crearEncuesta(tituloEncuesta, opciones);
+//Ejecutamos el cuestionario
+realizarCuestionario(preguntas);
 
-let continuarVotando = true;
-while (continuarVotando) {
-  const opcionVoto = prompt("Ingrese la opción en la que desea votar:");
-  votarEnEncuesta(encuesta, opcionVoto);
-  continuarVotando = confirm("¿Desea seguir votando?");
-}
