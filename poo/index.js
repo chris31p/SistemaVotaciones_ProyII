@@ -20,10 +20,8 @@ class Pregunta {
     this.opciones = opciones.map(opcion => new Opcion(opcion));
   }
 
-  votar(opcionTexto) {
-    const opcion = this.opciones.find(
-      (op) => op.texto.toLowerCase() === opcionTexto.toLowerCase()
-    );
+  votar(opcionNumero) {
+    const opcion = this.opciones[opcionNumero - 1];
     if (opcion) {
       opcion.votar();
       return true; // Voto exitoso
@@ -38,7 +36,17 @@ class Pregunta {
     });
     return resultados;
   }
+
+  // Método para mostrar la pregunta junto con sus opciones
+  mostrarPregunta() {
+    let preguntaConOpciones = `${this.texto}\nOpciones:\n`;
+    this.opciones.forEach((op, index) => {
+      preguntaConOpciones += `${index + 1}. ${op.texto}\n`;
+    });
+    return preguntaConOpciones;
+  }
 }
+
 
 // Clase para la encuesta
 class Encuesta {
@@ -52,8 +60,10 @@ class Encuesta {
     this.preguntas.push(nuevaPregunta);
   }
 
-  votarPregunta(index, opcionTexto) {
-    if (this.preguntas[index].votar(opcionTexto)) {
+  votarPregunta(index) {
+    const pregunta = this.preguntas[index];
+    const opcionVoto = prompt(`${pregunta.mostrarPregunta()}\nIngrese el texto de la opción que desea votar:`);
+    if (pregunta.votar(opcionVoto)) {
       alert("¡Voto registrado!");
     } else {
       alert("Opción no válida.");
@@ -65,7 +75,8 @@ class Encuesta {
     this.preguntas.forEach((pregunta) => {
       resultados += pregunta.mostrarResultados() + "\n";
     });
-    alert(resultados);
+    alert("Los resultados completos se mostrarán por consola");
+    console.log(resultados);
   }
 }
 
@@ -84,9 +95,8 @@ for (let i = 0; i < 8; i++) {
 let continuarVotando = true;
 while (continuarVotando) {
   const numPregunta = parseInt(prompt("Ingrese el número de la pregunta en la que desea votar (1 a 8):")) - 1;
-  if (numPregunta >= 0 && numPregunta < 8) {
-    const opcionVoto = prompt("Ingrese la opción en la que desea votar:");
-    encuesta.votarPregunta(numPregunta, opcionVoto);
+  if (numPregunta >= 0 && numPregunta < 8) {    
+    encuesta.votarPregunta(numPregunta);
   } else {
     alert("Número de pregunta no válido.");
   }

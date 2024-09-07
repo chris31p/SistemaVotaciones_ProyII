@@ -27,13 +27,15 @@ const votarEnEncuesta = (encuesta, opcionTexto) => {
     alert("Opción no encontrada, por favor ingrese una opción válida.");
   }
 };
-// Función para mostrar los resultados de una encuesta
+
+// Función para mostrar los resultados de una encuesta en alerta y consola
 const mostrarResultadosEncuesta = (encuesta) => {
   let resultados = `Resultados para la encuesta: ${encuesta.titulo}\n`;
   encuesta.opciones.forEach((op) => {
     resultados += `${op.texto}: ${op.votos} votos\n`;
   });
-  alert(resultados);
+  alert(resultados);        // Mostrar en alerta
+  console.log(resultados);  // Mostrar en consola
 };
 
 // Interacción con el usuario
@@ -41,10 +43,10 @@ const tituloEncuesta = prompt("Ingrese el título de la encuesta:");
 const opciones = [];
 let agregarMasOpciones = true;
 
-while (agregarMasOpciones) {
-  const opcionTexto = prompt("Ingrese una opción de respuesta:");
+// Agregar exactamente 8 preguntas
+for (let i = 0; i < 8; i++) {
+  const opcionTexto = prompt(`Ingrese la opción de respuesta ${i + 1}:`);
   opciones.push(opcionTexto);
-  agregarMasOpciones = confirm("¿Desea agregar otra opción?");
 }
 
 const encuesta = crearEncuesta(tituloEncuesta, opciones);
