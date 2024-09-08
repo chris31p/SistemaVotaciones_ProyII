@@ -72,6 +72,8 @@ const preguntas = [
   crearPregunta('¿Qué significa “andar con la caña”?', ["Estar enamorado", "Estar resfriado", "Tener resaca", "Estar cansado"], 'Tener resaca'),
   crearPregunta('¿Qué famoso festival de música se celebra anualmente en Viña del Mar?', ["Lollapalooza", "Festival de Viña", "Rock in Rio", "Coachella"], 'Festival de Viña'),
   crearPregunta('¿Qué animal es el símbolo nacional de Chile?', ["Cóndor", "Puma", "Llama", "Guanaco"], 'Cóndor'),
+  crearPregunta('¿Cuál es la montaña más alta de Chile?', ["Volcán Villarrica", "Cerro San Cristóbal", "Ojos del Salado", "Aconcagua"], 'Ojos del Salado'),
+  crearPregunta('Si alguien te dice "estoy chato", ¿cómo se siente?', ["Está aburrido", "Está cansado", "Está feliz", "Está confundido"], 'Está cansado'),
 ];
 
 //Ejecutamos el cuestionario
