@@ -62,7 +62,7 @@ class Encuesta {
 
   votarPregunta(index) {
     const pregunta = this.preguntas[index];
-    const opcionVoto = prompt(`${pregunta.mostrarPregunta()}\nIngrese el texto de la opción que desea votar:`);
+    const opcionVoto = prompt(`${pregunta.mostrarPregunta()}\nIngrese el número de la opción que desea votar:`);
     if (pregunta.votar(opcionVoto)) {
       alert("¡Voto registrado!");
     } else {
