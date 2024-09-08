@@ -3,11 +3,11 @@ PROYECTO 2: Sistema de Votación en JavaScript
 
 Construir un programa en JavaScript que permita a los usuarios crear encuestas, votar y ver los resultados en tiempo real. El programa debe cumplir con los siguientes requisitos:
 
--> Permitir a los usuarios crear encuestas con opciones de respuesta.
--> Permitir a los usuarios votar en las encuestas.
--> Mostrar los resultados de las encuestas en tiempo real.
--> Almacenar los datos de las encuestas y los votos en una variable.
--> Implementar la solución utilizando programación orientada a objetos (POO) y programación funcional (PF).
+Permitir a los usuarios crear encuestas con opciones de respuesta.
+Permitir a los usuarios votar en las encuestas.
+Mostrar los resultados de las encuestas en tiempo real.
+Almacenar los datos de las encuestas y los votos en una variable.
+Implementar la solución utilizando programación orientada a objetos (POO) y programación funcional (PF).
 
 Primero empezamos por crear dos carpetas en el repositorio: poo y pf. Cada uno con su archivo index.html e index.js.
 
